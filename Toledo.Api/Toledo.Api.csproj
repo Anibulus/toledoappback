@@ -1,0 +1,49 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <ItemGroup>
+        <ProjectReference Include="..\Toledo.Core\Toledo.Core.csproj" />
+        <ProjectReference Include="..\Toledo.Infrastructure\Toledo.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Using Include="Toledo.Infrastructure.Data" />
+        <Using Include="Toledo.Core.Entities" />
+        <Using Include="Toledo.Api.GraphQL.Queries" />
+        <Using Include="HotChocolate.Data.Filters" />
+        <Using Include="System" />
+        <Using Include="System.Collections.Generic" />
+        <Using Include="System.ComponentModel.DataAnnotations" />
+        <Using Include="System.ComponentModel.DataAnnotations.Schema" />
+        <Using Include="Microsoft.EntityFrameworkCore" />
+        <Using Include="Toledo.Infrastructure.Settings" />
+        <Using Include="Toledo.Api.Extensions" />
+    </ItemGroup>
+	<ItemGroup>
+        <PackageReference Include="DotNetEnv" Version="2.2.0" />
+        <PackageReference Include="HotChocolate.Stitching" Version="12.7.0" />
+        <PackageReference Include="HotChocolate.AspNetCore" Version="12.7.0" />
+        <PackageReference Include="HotChocolate.AspNetCore.Authorization" Version="12.7.2" />
+        <PackageReference Include="HotChocolate.Data" Version="12.7.0" />
+        <PackageReference Include="HotChocolate.Data.EntityFramework" Version="12.7.0" />
+        <PackageReference Include="Json.Net" Version="1.0.33" />
+        <PackageReference Include="JsonNet.PrivateSettersContractResolvers" Version="1.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.0">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.14.1" />
+    </ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Seeding" />
+	</ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+</Project>

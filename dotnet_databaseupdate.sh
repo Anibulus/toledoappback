@@ -1,0 +1,1 @@
+dotnet ef database update --project Toledo.Infrastructure --startup-project Toledo.Api
