@@ -9,7 +9,11 @@ namespace Toledo.Infrastructure.Data
 {
     public class ToledoContext : DbContext
     {
-        // public  DbSet<Currency> Currencies { get; set; }
+        public  DbSet<User> Users { get; set; }
+        public  DbSet<Location> Locations { get; set; }
+        public  DbSet<Pet> Pets { get; set; }
+        public  DbSet<PetImage> PetImages { get; set; }
+        public  DbSet<PetDisease> PetDiseases { get; set; }
 
         public ToledoContext(){}
 

@@ -1,17 +1,59 @@
-﻿namespace Toledo.Api.GraphQL.Queries
+﻿using System.Security.Claims;
+
+namespace Toledo.Api.GraphQL.Queries
 {
     public class Global
     {
-        //[Authorize]
-        //[UseProjection]
-        //public Task<Member> GetMe(ClaimsPrincipal claimsPrincipal, [Service] IMemberService _memberService, ToledoContext context)
-        //{
-        //var userIdStr = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
+        [UseOffsetPaging(IncludeTotalCount = true)]
+        [UseProjection]
+        [UseFiltering]
+        [UseSorting]
+        public IQueryable<User> ListUsers(ClaimsPrincipal claimsPrincipal, ToledoContext context)
+        {
+            //var userIdStr = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
+            return context.Users.AsQueryable();
+        }
 
-        //var user = _memberService.GetMe(userIdStr);
+        [UseOffsetPaging(IncludeTotalCount = true)]
+        [UseProjection]
+        [UseFiltering]
+        [UseSorting]
+        public IQueryable<Toledo.Core.Entities.Location> ListLocations(
+            ClaimsPrincipal claimsPrincipal,
+            ToledoContext context
+        )
+        {
+            return context.Locations.AsQueryable();
+        }
 
-        //    return user;
-        //}
+        [UseOffsetPaging(IncludeTotalCount = true)]
+        [UseProjection]
+        [UseFiltering]
+        [UseSorting]
+        public IQueryable<Pet> ListPets(ClaimsPrincipal claimsPrincipal, ToledoContext context)
+        {
+            return context.Pets.AsQueryable();
+        }
 
+        [UseOffsetPaging(IncludeTotalCount = true)]
+        [UseProjection]
+        [UseFiltering]
+        [UseSorting]
+        public IQueryable<PetImage> ListPetImages(
+            ClaimsPrincipal claimsPrincipal,
+            ToledoContext context
+        )
+        {
+            return context.PetImages.AsQueryable();
+        }
+
+        [UseOffsetPaging(IncludeTotalCount = true)]
+        [UseProjection]
+        [UseFiltering]
+        [UseSorting]
+        public IQueryable<PetDisease> ListPetDiseases(ClaimsPrincipal claimsPrincipal, ToledoContext context)
+        {
+            return context.PetDiseases.AsQueryable();
+        }
     }
 }
