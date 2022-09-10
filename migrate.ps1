@@ -1,0 +1,1 @@
+dotnet ef migrations add $args[0] --project Toledo.Infrastructure --startup-project Toledo.Api
