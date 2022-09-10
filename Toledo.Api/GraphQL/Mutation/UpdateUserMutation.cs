@@ -4,12 +4,22 @@ using Toledo.Core.Enumerations;
 
 namespace Toledo.Api.GraphQL.Mutation;
 
+public record UpdateUserInput(
+    string? DNI,
+    string? Name,
+    string? Email,
+    EnumRole? Role,
+    EnumGender? Gender,
+    string? Phone,
+    string? Observation
+);
+
 [ExtendObjectType(OperationTypeNames.Mutation)]
 public class UpdateUserMutation
 {
     public async Task<UserPayload> UpdateUser(
         Guid id,
-        UserInput input,
+        UpdateUserInput input,
         ClaimsPrincipal claimsPrincipal,
         ToledoContext context
     )
@@ -26,9 +36,6 @@ public class UpdateUserMutation
 
         if (input.Email is not null)
             user.Email = input.Email;
-
-        if (input.Password is not null)
-            user.Password = input.Password;
 
         if (input.Role is not null)
             user.Role = (EnumRole)input.Role;
