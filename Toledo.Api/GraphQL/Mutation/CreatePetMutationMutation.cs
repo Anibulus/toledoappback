@@ -33,10 +33,6 @@ public class CreatePetMutation
         ToledoContext context
     )
     {
-        if (input.UserId is null)
-            throw new GraphQLException(
-                nameof(input.UserId) + Errors.Exceptions.ELEMENT_CANNOT_BE_NULL
-            );
 
         var pet = new Pet
         {
@@ -44,7 +40,7 @@ public class CreatePetMutation
             Gender = input.Gender ?? EnumGender.OTHER,
             Breed = input.Breed ?? "",
             Size = input.Size ?? EnumPetSize.MEDIUM,
-            DateOfBirth = input.DateOfBirth ?? DateTime.Now,
+            DateOfBirth = input.DateOfBirth ?? DateTime.UtcNow,
             Sterilized = input.Sterilized ?? false,
             LocationOfSterilization = input.LocationOfSterilization,
             Address = input.Address ?? "",
@@ -54,7 +50,7 @@ public class CreatePetMutation
             Zone = input.Zone ?? "",
             Notes = input.Notes ?? "",
             PetType = input.PetType ?? "",
-            UserId = (Guid)input.UserId
+            UserId = input.UserId
         };
 
         context.Pets.Add(pet);
