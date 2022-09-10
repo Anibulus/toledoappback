@@ -1,10 +1,11 @@
 using HotChocolate.AspNetCore.Authorization;
 using System.Security.Claims;
 using Toledo.Core.Enumerations;
+using Toledo.Infrastructure.Services;
 
 namespace Toledo.Api.GraphQL.Mutation;
 
-public record UserInput(
+public record CreateUserInput(
     string? DNI,
     string? Name,
     string? Email,
@@ -21,7 +22,7 @@ public record UserPayload(User user);
 public class CreateUserMutation
 {
     public async Task<UserPayload> CreateUser(
-        UserInput input,
+        CreateUserInput input,
         ClaimsPrincipal claimsPrincipal,
         ToledoContext context
     )
@@ -34,17 +35,21 @@ public class CreateUserMutation
         if (isUserDuplicated)
             throw new GraphQLException(Errors.Exceptions.DNI_DUPLICATED);
 
+        string? salt = null;
+        string pwdHashed = UpdatePasswordMutation.GenerateHashPassword(input.Password ?? "", ref salt);
+
         var user = new User
         {
             DNI = (string)input.DNI,
             Name = input.Name ?? "",
             Email = input.Email ?? "",
-            //FIXME 
-            Password = input.Password ?? "", //REVIEW Quienes si pueden usar contrasseña y cuando se declara esta
+            PasswordSalt = salt!,
+            Password = pwdHashed,
             Role = input.Role ?? EnumRole.USER,
             Gender = input.Gender ?? EnumGender.OTHER,
             Phone = input.Phone ?? "",
-            Observation = input.Observation
+            Observation = input.Observation,
+            Active = true
         };
 
         context.Users.Add(user);
