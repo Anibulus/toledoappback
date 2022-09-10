@@ -35,16 +35,15 @@ public class CreateUserMutation
         if (isUserDuplicated)
             throw new GraphQLException(Errors.Exceptions.DNI_DUPLICATED);
 
-        string pwd = input.Password ?? "";
-        string salt = SecurityHelper.GenerateSalt();
-        string pwdHashed = SecurityHelper.HashPassword(pwd, salt, 10101, 70);
+        string? salt = null;
+        string pwdHashed = UpdatePasswordMutation.GenerateHashPassword(input.Password ?? "", ref salt);
 
         var user = new User
         {
             DNI = (string)input.DNI,
             Name = input.Name ?? "",
             Email = input.Email ?? "",
-            PasswordSalt = salt,
+            PasswordSalt = salt!,
             Password = pwdHashed,
             Role = input.Role ?? EnumRole.USER,
             Gender = input.Gender ?? EnumGender.OTHER,

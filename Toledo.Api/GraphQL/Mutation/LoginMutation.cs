@@ -26,9 +26,8 @@ public class LoginMutation
             throw new GraphQLException(Errors.Exceptions.USER_NOT_FOUND);
 
         #region Validate password
-        string pwd = input.Password;
-        string salt = user.PasswordSalt;
-        string pwdHashed = SecurityHelper.HashPassword(pwd, salt, 10101, 70);
+        string? salt = user.PasswordSalt;
+        string pwdHashed = UpdatePasswordMutation.GenerateHashPassword(input.Password, ref salt);
 
         if (!user.Password.Equals(pwdHashed))
             throw new GraphQLException(Errors.Exceptions.INCORRECT_CREDENTIALS);

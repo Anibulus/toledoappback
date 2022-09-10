@@ -45,6 +45,7 @@ public static class GraphQLServerExtension
             .AddTypeExtension<CreateUserMutation>()
             .AddTypeExtension<UpdateUserMutation>()
             .AddTypeExtension<DeleteUserMutation>()
+            .AddTypeExtension<UpdatePasswordMutation>()
             .AddTypeExtension<LoginMutation>()
             .ConfigureResolverCompiler(c => c.AddService<ToledoContext>())
             .AddFiltering()
