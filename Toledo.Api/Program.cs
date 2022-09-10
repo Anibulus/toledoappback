@@ -15,7 +15,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapGraphQL();
 
-app.MapGet("/", () => "POWERED IN IXULABS");
+app.MapGet("/", () => "");
 
 //KUBERNETES
 //liveness, readiness and startup probes for containers
