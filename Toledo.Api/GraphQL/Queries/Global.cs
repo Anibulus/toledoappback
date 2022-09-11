@@ -1,9 +1,12 @@
 ﻿using System.Security.Claims;
+using HotChocolate.AspNetCore.Authorization;
+using Toledo.Api.ActionFilters;
 
 namespace Toledo.Api.GraphQL.Queries
 {
     public class Global
     {
+        [Authorize]
         [UseOffsetPaging(IncludeTotalCount = true)]
         [UseProjection]
         [UseFiltering]
@@ -14,6 +17,7 @@ namespace Toledo.Api.GraphQL.Queries
             return context.Users.AsQueryable();
         }
 
+        [Authorize]
         [UseOffsetPaging(IncludeTotalCount = true)]
         [UseProjection]
         [UseFiltering]
@@ -25,7 +29,7 @@ namespace Toledo.Api.GraphQL.Queries
         {
             return context.Locations.AsQueryable();
         }
-
+        
         [UseOffsetPaging(IncludeTotalCount = true)]
         [UseProjection]
         [UseFiltering]

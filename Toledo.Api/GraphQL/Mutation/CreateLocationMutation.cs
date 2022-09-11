@@ -17,6 +17,7 @@ public record LocationPayload(Toledo.Core.Entities.Location location);
 [ExtendObjectType(OperationTypeNames.Mutation)]
 public class CreateLocationMutation
 {
+    [Authorize]
     public async Task<LocationPayload> CreateLocation(
         LocationInput input,
         ClaimsPrincipal claimsPrincipal,

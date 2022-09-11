@@ -27,6 +27,7 @@ public record PetPayload(Pet pet);
 [ExtendObjectType(OperationTypeNames.Mutation)]
 public class CreatePetMutation
 {
+    [Authorize]
     public async Task<PetPayload> CreatePet(
         PetInput input,
         ClaimsPrincipal claimsPrincipal,

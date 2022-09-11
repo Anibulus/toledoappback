@@ -11,6 +11,7 @@ public record PetImagePayload(PetImage petImage);
 [ExtendObjectType(OperationTypeNames.Mutation)]
 public class CreatePetImageMutation
 {
+    [Authorize]
     public async Task<PetImagePayload> CreatePetImage(
         PetImageInput input,
         ClaimsPrincipal claimsPrincipal,

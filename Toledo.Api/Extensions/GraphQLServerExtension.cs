@@ -51,6 +51,7 @@ public static class GraphQLServerExtension
             .AddFiltering()
             .AddSorting()
             .AddProjections()
+            .AddAuthorization()
             .AddConvention<IFilterConvention>(
                 new FilterConventionExtension(
                     x =>

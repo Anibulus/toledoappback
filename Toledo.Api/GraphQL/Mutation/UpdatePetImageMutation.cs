@@ -7,6 +7,7 @@ namespace Toledo.Api.GraphQL.Mutation;
 [ExtendObjectType(OperationTypeNames.Mutation)]
 public class UpdatePetImageMutation
 {
+    [Authorize]
     public async Task<PetImagePayload> UpdatePetImage(
         Guid id,
         PetImageInput input,

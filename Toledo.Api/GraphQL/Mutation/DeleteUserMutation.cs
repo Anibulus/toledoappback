@@ -7,6 +7,7 @@ namespace Toledo.Api.GraphQL.Mutation;
 [ExtendObjectType(OperationTypeNames.Mutation)]
 public class DeleteUserMutation
 {
+    [Authorize]
     public async Task<Guid> DeleteUser(
         Guid id,
         ClaimsPrincipal claimsPrincipal,

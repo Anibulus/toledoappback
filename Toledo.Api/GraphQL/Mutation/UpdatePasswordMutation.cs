@@ -11,6 +11,7 @@ public record UpdatePasswordInput(Guid UserId, string OldPassword, string Passwo
 [ExtendObjectType(OperationTypeNames.Mutation)]
 public class UpdatePasswordMutation
 {
+    [Authorize]
     public async Task<UserPayload> UpdatePassword(
         UpdatePasswordInput input,
         ClaimsPrincipal claimsPrincipal,

@@ -11,6 +11,7 @@ public record PetDiseasePayload(PetDisease petDisease);
 [ExtendObjectType(OperationTypeNames.Mutation)]
 public class CreatePetDiseaseMutation
 {
+    [Authorize]
     public async Task<PetDiseasePayload> CreatePetDisease(
         PetDiseaseInput input,
         ClaimsPrincipal claimsPrincipal,

@@ -21,6 +21,7 @@ public record UserPayload(User user);
 [ExtendObjectType(OperationTypeNames.Mutation)]
 public class CreateUserMutation
 {
+    [Authorize]
     public async Task<UserPayload> CreateUser(
         CreateUserInput input,
         ClaimsPrincipal claimsPrincipal,

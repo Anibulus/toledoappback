@@ -7,6 +7,7 @@ namespace Toledo.Api.GraphQL.Mutation;
 [ExtendObjectType(OperationTypeNames.Mutation)]
 public class UpdateLocationMutation
 {
+    [Authorize]
     public async Task<LocationPayload> UpdateLocation(
         Guid id,
         LocationInput input,

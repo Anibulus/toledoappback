@@ -17,6 +17,7 @@ public record UpdateUserInput(
 [ExtendObjectType(OperationTypeNames.Mutation)]
 public class UpdateUserMutation
 {
+    [Authorize]
     public async Task<UserPayload> UpdateUser(
         Guid id,
         UpdateUserInput input,
