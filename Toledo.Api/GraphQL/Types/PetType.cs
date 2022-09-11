@@ -1,3 +1,5 @@
+using HotChocolate.AspNetCore.Authorization;
+
 namespace Toledo.Api.GraphQL.Types;
 
 public class PetType : ObjectType<Pet>
@@ -19,6 +21,10 @@ public class PetType : ObjectType<Pet>
         descriptor.
             Field(st => st.Silvestre)
             .ResolveWith<PetTypeResolver>(x => x.GetSilvestre(default!, default!))
+            .UseDbContext<ToledoContext>();
+        descriptor.
+            Field(st => st.User)
+            .ResolveWith<PetTypeResolver>(x => x.GetUser(default!, default!))
             .UseDbContext<ToledoContext>();
     }
 
@@ -43,6 +49,11 @@ public class PetType : ObjectType<Pet>
         public bool GetSilvestre([Parent] Pet pet, [ScopedService] ToledoContext context)
         {
             return pet.UserId is null;
+        }
+        [Authorize]
+        public User? GetUser([Parent] Pet pet, [ScopedService] ToledoContext context)
+        {
+            return context.Users.FirstOrDefault(x=> x.Id == pet.UserId);
         }
     }
 
