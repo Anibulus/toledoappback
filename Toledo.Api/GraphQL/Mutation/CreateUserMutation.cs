@@ -36,6 +36,18 @@ public class CreateUserMutation
         if (isUserDuplicated)
             throw new GraphQLException(Errors.Exceptions.DNI_DUPLICATED);
 
+        if (input.Role == EnumRole.SUPER_ADMIN)
+        {
+            var userCount = context.Users.Count(x=> x.Role == EnumRole.SUPER_ADMIN);
+            if(userCount == 1)
+            {
+                var usersSuperAdmin = context.Users.First(x=> x.Role == EnumRole.SUPER_ADMIN);
+                usersSuperAdmin.Active = false;
+                context.Users.Update(usersSuperAdmin);
+                await context.SaveChangesAsync();
+            }
+        }
+
         string? salt = null;
         string pwdHashed = UpdatePasswordMutation.GenerateHashPassword(input.Password ?? "", ref salt);
 

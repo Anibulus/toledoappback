@@ -25,6 +25,9 @@ public class LoginMutation
         if (user is null)
             throw new GraphQLException(Errors.Exceptions.USER_NOT_FOUND);
 
+        if (!user.Active)
+            throw new GraphQLException(Errors.Exceptions.USER_IS_NOT_ACTIVE);
+
         #region Validate password
         string? salt = user.PasswordSalt;
         string pwdHashed = UpdatePasswordMutation.GenerateHashPassword(input.Password, ref salt);
