@@ -4,6 +4,7 @@ using Toledo.Api.ActionFilters;
 
 namespace Toledo.Api.GraphQL.Queries
 {
+    [ExtendObjectType(OperationTypeNames.Query)]
     public class Global
     {
         [Authorize]

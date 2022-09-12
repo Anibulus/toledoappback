@@ -8,4 +8,5 @@ public static class Exceptions
     public static readonly string USER_NOT_FOUND = "User not found";
     public static readonly string INCORRECT_CREDENTIALS = "Incorrect credentials";
     public static readonly string NOT_PERMISSION = "You have not permission to perfom this action";
+    public static readonly string USER_IS_NOT_ACTIVE = "This user is not active";
 }
