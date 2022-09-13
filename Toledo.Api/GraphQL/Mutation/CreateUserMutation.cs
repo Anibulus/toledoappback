@@ -31,7 +31,7 @@ public class CreateUserMutation
         if (input.DNI is null)
             throw new GraphQLException(input.DNI+Errors.Exceptions.ELEMENT_CANNOT_BE_NULL);
 
-        var isUserDuplicated = context.Users.Any(user => user.DNI.Equals(input.DNI));
+        var isUserDuplicated = context.Users.Any(user => user.DNI.Equals(input.DNI.Trim()));
 
         if (isUserDuplicated)
             throw new GraphQLException(Errors.Exceptions.DNI_DUPLICATED);
@@ -53,7 +53,7 @@ public class CreateUserMutation
 
         var user = new User
         {
-            DNI = (string)input.DNI,
+            DNI = (string)input.DNI.Trim(),
             Name = input.Name ?? "",
             Email = input.Email ?? "",
             PasswordSalt = salt!,

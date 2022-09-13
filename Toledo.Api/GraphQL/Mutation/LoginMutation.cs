@@ -35,8 +35,8 @@ public class LoginMutation
         if (!user.Password.Equals(pwdHashed))
             throw new GraphQLException(Errors.Exceptions.INCORRECT_CREDENTIALS);
         #endregion
-
-        user.LoginCount = user.LoginCount++;
+        
+        user.LoginCount++;
         user.LastLogin = DateTime.UtcNow;
 
         context.Users.Update(user);
