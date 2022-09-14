@@ -37,6 +37,14 @@ namespace Toledo.Api.GraphQL.Queries
         {
             return context.Locations.AsQueryable();
         }
+
+        [UseProjection]
+        public Pet? GetPetById(Guid id, ClaimsPrincipal claimsPrincipal, ToledoContext context)
+        {
+            //var userIdStr = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
+            return context.Pets.FirstOrDefault(x=>x.Id == id);
+        }
+
         
         [UseOffsetPaging(IncludeTotalCount = true)]
         [UseProjection]
