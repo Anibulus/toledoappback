@@ -13,7 +13,8 @@ public record CreateUserInput(
     EnumRole? Role,
     EnumGender? Gender,
     string? Phone,
-    string? Observation
+    string? Observation,
+    LocationInput? Location
 );
 
 public record UserPayload(User user);
@@ -29,7 +30,7 @@ public class CreateUserMutation
     )
     {
         if (input.DNI is null)
-            throw new GraphQLException(input.DNI+Errors.Exceptions.ELEMENT_CANNOT_BE_NULL);
+            throw new GraphQLException(input.DNI + Errors.Exceptions.ELEMENT_CANNOT_BE_NULL);
 
         var isUserDuplicated = context.Users.Any(user => user.DNI.Equals(input.DNI.Trim()));
 
@@ -38,10 +39,10 @@ public class CreateUserMutation
 
         if (input.Role == EnumRole.SUPER_ADMIN)
         {
-            var userCount = context.Users.Count(x=> x.Role == EnumRole.SUPER_ADMIN);
-            if(userCount == 1)
+            var userCount = context.Users.Count(x => x.Role == EnumRole.SUPER_ADMIN);
+            if (userCount == 1)
             {
-                var usersSuperAdmin = context.Users.First(x=> x.Role == EnumRole.SUPER_ADMIN);
+                var usersSuperAdmin = context.Users.First(x => x.Role == EnumRole.SUPER_ADMIN);
                 usersSuperAdmin.Active = false;
                 context.Users.Update(usersSuperAdmin);
                 await context.SaveChangesAsync();
@@ -49,7 +50,10 @@ public class CreateUserMutation
         }
 
         string? salt = null;
-        string pwdHashed = UpdatePasswordMutation.GenerateHashPassword(input.Password ?? "", ref salt);
+        string pwdHashed = UpdatePasswordMutation.GenerateHashPassword(
+            input.Password ?? "",
+            ref salt
+        );
 
         var user = new User
         {
@@ -70,6 +74,12 @@ public class CreateUserMutation
         try
         {
             await context.SaveChangesAsync();
+
+            if (input.Location is not null)
+            {
+                CreateLocationMutation locationMutation = new();
+                await locationMutation.CreateLocation(input.Location, claimsPrincipal, context);
+            }
         }
         catch (Exception e)
         {
