@@ -18,10 +18,12 @@ public class DeleteUserMutation
         if (user is null)
             throw new GraphQLException(Errors.Exceptions.ID_NOT_FOUND);
 
-        context.Users.Remove(user);
-
         try
         {
+            context.Pets.RemoveRange(context.Pets.Where(x=>x.UserId == user.Id));
+            await context.SaveChangesAsync();
+
+            context.Users.Remove(user);
             await context.SaveChangesAsync();
         }
         catch (Exception e)
