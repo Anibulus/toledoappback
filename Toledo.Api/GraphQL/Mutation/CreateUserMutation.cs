@@ -78,7 +78,17 @@ public class CreateUserMutation
             if (input.Location is not null)
             {
                 CreateLocationMutation locationMutation = new();
-                await locationMutation.CreateLocation(input.Location, claimsPrincipal, context);
+                await locationMutation.CreateLocation(
+                    new(
+                        user.Id,
+                        input.Location.Longitude,
+                        input.Location.Latitude,
+                        input.Location.Zone,
+                        input.Location.Address
+                    ),
+                    claimsPrincipal,
+                    context
+                );
             }
         }
         catch (Exception e)
