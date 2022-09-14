@@ -7,6 +7,13 @@ namespace Toledo.Api.GraphQL.Queries
     [ExtendObjectType(OperationTypeNames.Query)]
     public class Global
     {
+        [UseProjection]
+        public User? GetUserById(Guid id, ClaimsPrincipal claimsPrincipal, ToledoContext context)
+        {
+            //var userIdStr = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
+            return context.Users.FirstOrDefault(x=>x.Id == id);
+        }
+
         [Authorize]
         [UseOffsetPaging(IncludeTotalCount = true)]
         [UseProjection]
