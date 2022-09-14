@@ -1,6 +1,7 @@
 using HotChocolate.AspNetCore.Authorization;
 using System.Security.Claims;
 using Toledo.Core.Enumerations;
+using Toledo.Core.DTO;
 
 namespace Toledo.Api.GraphQL.Mutation;
 
@@ -8,7 +9,7 @@ namespace Toledo.Api.GraphQL.Mutation;
 public class DeletePetImageMutation
 {
     [Authorize]
-    public async Task<Guid> DeletePetImage(
+    public async Task<DeletedId> DeletePetImage(
         Guid id,
         ClaimsPrincipal claimsPrincipal,
         ToledoContext context
@@ -29,6 +30,6 @@ public class DeletePetImageMutation
             throw new GraphQLException(e.Message);
         }
 
-        return petImage.Id;
+        return new DeletedId(petImage.Id);
     }
 }

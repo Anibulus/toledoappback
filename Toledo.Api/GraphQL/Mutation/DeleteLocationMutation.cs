@@ -2,6 +2,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using HotChocolate.AspNetCore.Authorization;
 using Toledo.Api.ActionFilters;
+using Toledo.Core.DTO;
 
 namespace Toledo.Api.GraphQL.Mutation;
 
@@ -11,7 +12,7 @@ public class DeleteLocationMutation
     [Authorize]
     //[MayPerfom]
     //[ServiceFilter(typeof(MayPerfom))]
-    public async Task<Guid> DeleteLocation(
+    public async Task<DeletedId> DeleteLocation(
         Guid id,
         ClaimsPrincipal claimsPrincipal,
         ToledoContext context
@@ -33,6 +34,6 @@ public class DeleteLocationMutation
             throw new GraphQLException(e.Message);
         }
 
-        return location.Id;
+        return new DeletedId(location.Id);
     }
 }
