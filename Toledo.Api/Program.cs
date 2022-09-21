@@ -15,7 +15,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapGraphQL();
 
-app.MapGet("/", () => "");
+app.MapGet("/", () => "AAAAAAA CONCHALE VALE CHICO");
 
 //KUBERNETES
 //liveness, readiness and startup probes for containers
