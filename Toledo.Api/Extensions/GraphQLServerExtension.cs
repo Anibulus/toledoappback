@@ -13,6 +13,7 @@ public static class GraphQLServerExtension
 {
     public static WebApplicationBuilder RegisterGraphQLServer(this WebApplicationBuilder builder)
     {
+       builder.Services.AddHttpResultSerializer<YuboHttpResult>();
         builder.Services
             .AddGraphQLServer()
             .ModifyRequestOptions(opt => opt.IncludeExceptionDetails = true)
@@ -53,16 +54,8 @@ public static class GraphQLServerExtension
             .AddSorting()
             .AddProjections()
             .AddAuthorization()
-            .AddConvention<IFilterConvention>(
-                new FilterConventionExtension(
-                    x =>
-                        x.AddProviderExtension(
-                            new QueryableFilterProviderExtension(
-                                y => y.AddFieldHandler<QueryableStringInvariantContainsHandler>()
-                            )
-                        )
-                )
-            );
+            .PublishSchemaDefinition(c => c
+                    .SetName("auth"));
 
         //.PublishSchemaDefinition(c => c.SetName("toledo").AddTypeExtensionsFromFile("./Stitching.graphql"));
 

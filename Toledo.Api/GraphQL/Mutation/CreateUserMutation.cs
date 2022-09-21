@@ -22,88 +22,80 @@ public record UserPayload(User user);
 [ExtendObjectType(OperationTypeNames.Mutation)]
 public class CreateUserMutation
 {
-  [Authorize]
-  public async Task<UserPayload> CreateUser(
-      CreateUserInput input,
-      ClaimsPrincipal claimsPrincipal,
-      ToledoContext context
-  )
-  {
-    if (input.DNI is null)
-      throw new GraphQLException(input.DNI + Errors.Exceptions.ELEMENT_CANNOT_BE_NULL);
-
-    var isUserDuplicated = context.Users.Any(user => user.DNI.Equals(input.DNI.Trim()));
-
-    if (isUserDuplicated)
+    [Authorize]
+    public async Task<UserPayload> CreateUser(
+        CreateUserInput input,
+        ClaimsPrincipal claimsPrincipal,
+        ToledoContext context
+    )
     {
-      throw new GraphQLException(Errors.Exceptions.DNI_DUPLICATED);
+        if (input.DNI is null)
+            throw new GraphQLException(input.DNI + Errors.Exceptions.ELEMENT_CANNOT_BE_NULL);
 
-    }
-    else
-    {
+        var isUserDuplicated = context.Users.Any(user => user.DNI.Equals(input.DNI.Trim()));
 
-      if (input.Role == EnumRole.SUPER_ADMIN)
-      {
-        var userCount = context.Users.Count(x => x.Role == EnumRole.SUPER_ADMIN);
-        if (userCount == 1)
+        if (isUserDuplicated)
+            throw new GraphQLException(Errors.Exceptions.DNI_DUPLICATED);
+
+        if (input.Role == EnumRole.SUPER_ADMIN)
         {
-          var usersSuperAdmin = context.Users.First(x => x.Role == EnumRole.SUPER_ADMIN);
-          usersSuperAdmin.Active = false;
-          context.Users.Update(usersSuperAdmin);
-          await context.SaveChangesAsync();
+            var userCount = context.Users.Count(x => x.Role == EnumRole.SUPER_ADMIN);
+            if (userCount == 1)
+            {
+                var usersSuperAdmin = context.Users.First(x => x.Role == EnumRole.SUPER_ADMIN);
+                usersSuperAdmin.Active = false;
+                context.Users.Update(usersSuperAdmin);
+                await context.SaveChangesAsync();
+            }
         }
-      }
 
-      string? salt = null;
-      string pwdHashed = UpdatePasswordMutation.GenerateHashPassword(
-          input.Password ?? "",
-          ref salt
-      );
+        string? salt = null;
+        string pwdHashed = UpdatePasswordMutation.GenerateHashPassword(
+            input.Password ?? "",
+            ref salt
+        );
 
-      var user = new User
-      {
-        DNI = (string)input.DNI.Trim(),
-        Name = input.Name ?? "",
-        Email = input.Email ?? "",
-        PasswordSalt = salt!,
-        Password = pwdHashed,
-        Role = input.Role ?? EnumRole.USER,
-        Gender = input.Gender ?? EnumGender.OTHER,
-        Phone = input.Phone ?? "",
-        Observation = input.Observation,
-        Active = true
-      };
-
-      context.Users.Add(user);
-
-      try
-      {
-        await context.SaveChangesAsync();
-
-        if (input.Location is not null)
+        var user = new User
         {
-          CreateLocationMutation locationMutation = new();
-          await locationMutation.CreateLocation(
-              new(
-                  user.Id,
-                  input.Location.Longitude,
-                  input.Location.Latitude,
-                  input.Location.Zone,
-                  input.Location.Address
-              ),
-              claimsPrincipal,
-              context
-          );
+            DNI = (string)input.DNI.Trim(),
+            Name = input.Name ?? "",
+            Email = input.Email ?? "",
+            PasswordSalt = salt!,
+            Password = pwdHashed,
+            Role = input.Role ?? EnumRole.USER,
+            Gender = input.Gender ?? EnumGender.OTHER,
+            Phone = input.Phone ?? "",
+            Observation = input.Observation,
+            Active = true
+        };
+
+        context.Users.Add(user);
+
+        try
+        {
+            await context.SaveChangesAsync();
+
+            if (input.Location is not null)
+            {
+                CreateLocationMutation locationMutation = new();
+                await locationMutation.CreateLocation(
+                    new(
+                        user.Id,
+                        input.Location.Longitude,
+                        input.Location.Latitude,
+                        input.Location.Zone,
+                        input.Location.Address
+                    ),
+                    claimsPrincipal,
+                    context
+                );
+            }
         }
-      }
-      catch (Exception e)
-      {
-        throw new GraphQLException(e.Message);
-      }
-      return new UserPayload(user);
+        catch (Exception e)
+        {
+            throw new GraphQLException(e.Message);
+        }
+
+        return new UserPayload(user);
     }
-
-
-
-  }
 }
