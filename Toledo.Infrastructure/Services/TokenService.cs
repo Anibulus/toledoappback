@@ -25,7 +25,7 @@ namespace Toledo.Infrastructure.Services
             var jwtToken = new JwtSecurityToken(
                 issuer: tokenSettings.Value.Issuer,
                 audience: tokenSettings.Value.Audience,
-                expires: DateTime.Now.AddDays(1),
+                expires: DateTime.Now.AddDays(200),
                 signingCredentials: credentials,
                 claims: claims
             );
