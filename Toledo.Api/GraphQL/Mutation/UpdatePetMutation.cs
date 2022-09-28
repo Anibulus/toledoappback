@@ -54,6 +54,9 @@ public class UpdatePetMutation
         if (input.Zone is not null)
             pet.Zone = input.Zone;
 
+        if (input.Color is not null)
+            pet.Color = input.Color;
+
         if (input.Notes is not null)
             pet.Notes = input.Notes;
 

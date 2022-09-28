@@ -17,6 +17,7 @@ public record PetInput(
     double? Longitude,
     double? Latitude,
     string? Zone,
+    string? Color,
     string? Notes,
     string? PetType,
     Guid? UserId
@@ -51,7 +52,8 @@ public class CreatePetMutation
             Zone = input.Zone ?? "",
             Notes = input.Notes ?? "",
             PetType = input.PetType ?? "",
-            UserId = input.UserId
+            UserId = input.UserId,
+            Color = input.Color ?? ""
         };
 
         context.Pets.Add(pet);

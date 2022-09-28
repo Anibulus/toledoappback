@@ -19,6 +19,7 @@ namespace Toledo.Core.Entities
         public double Longitude { get; set; }
         public double Latitude { get; set; }
         public string Zone { get; set; } = "";
+        public string Color { get; set; } = "";
         public string Notes { get; set; } = "";
         public string PetType { get; set; } = "";
 

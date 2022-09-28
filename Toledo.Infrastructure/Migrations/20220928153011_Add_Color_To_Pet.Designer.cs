@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Toledo.Infrastructure.Data;
@@ -11,9 +12,10 @@ using Toledo.Infrastructure.Data;
 namespace Toledo.Infrastructure.Migrations
 {
     [DbContext(typeof(ToledoContext))]
-    partial class ToledoContextModelSnapshot : ModelSnapshot
+    [Migration("20220928153011_Add_Color_To_Pet")]
+    partial class Add_Color_To_Pet
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
