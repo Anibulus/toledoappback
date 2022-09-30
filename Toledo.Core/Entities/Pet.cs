@@ -22,6 +22,7 @@ namespace Toledo.Core.Entities
         public string Color { get; set; } = "";
         public string Notes { get; set; } = "";
         public string PetType { get; set; } = "";
+        public List<string>? Images { get; set; }
 
         [NotMapped]
         public bool Silvestre { get; set; }

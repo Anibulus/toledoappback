@@ -20,7 +20,8 @@ public record PetInput(
     string? Color,
     string? Notes,
     string? PetType,
-    Guid? UserId
+    Guid? UserId,
+    List<string> Images
 );
 
 public record PetPayload(Pet pet);
@@ -53,7 +54,8 @@ public class CreatePetMutation
             Notes = input.Notes ?? "",
             PetType = input.PetType ?? "",
             UserId = input.UserId,
-            Color = input.Color ?? ""
+            Color = input.Color ?? "",
+            Images = input.Images
         };
 
         context.Pets.Add(pet);
