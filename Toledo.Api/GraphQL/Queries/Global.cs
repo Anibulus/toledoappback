@@ -7,6 +7,26 @@ namespace Toledo.Api.GraphQL.Queries
     [ExtendObjectType(OperationTypeNames.Query)]
     public class Global
     {
+        [Authorize]
+        [UseProjection]
+        public async Task<User> GetMeById(ClaimsPrincipal claimsPrincipal, ToledoContext context)
+        {
+            var userIdStr = claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            Guid userId = Guid.Empty; 
+            Guid.TryParse(userIdStr, out userId);
+
+            if(userId.Equals(Guid.Empty))
+                throw new GraphQLException(Errors.Exceptions.INCORRECT_CREDENTIALS);
+
+            var user = context.Users.FirstOrDefault(x=> x.Id == userId);
+
+            if(user is null)
+                throw new GraphQLException(Errors.Exceptions.ID_NOT_FOUND);
+
+            return user;
+        }
+
         [UseProjection]
         public User? GetUserById(Guid id, ClaimsPrincipal claimsPrincipal, ToledoContext context)
         {
