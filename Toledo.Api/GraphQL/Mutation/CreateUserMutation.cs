@@ -37,6 +37,11 @@ public class CreateUserMutation
         if (isUserDuplicated)
             throw new GraphQLException(Errors.Exceptions.DNI_DUPLICATED);
 
+        isUserDuplicated = context.Users.Any(user => user.Email.Equals(input.Email ?? "".Trim()));
+
+        if (isUserDuplicated)
+            throw new GraphQLException(Errors.Exceptions.EMAIL_DUPLICATED);
+
         if (input.Role == EnumRole.SUPER_ADMIN)
         {
             var userCount = context.Users.Count(x => x.Role == EnumRole.SUPER_ADMIN);
