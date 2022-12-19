@@ -38,13 +38,13 @@ public class PetType : ObjectType<Pet>
         {
             return context.PetImages.Where(x => x.PetId == pet.Id);
         }
-        public int GetYears([Parent] Pet pet, [ScopedService] ToledoContext context)
+        public string GetYears([Parent] Pet pet, [ScopedService] ToledoContext context)
         {
             int age = 0;
             age = DateTime.Now.Year - pet.DateOfBirth.Year;
             if (DateTime.Now.DayOfYear < pet.DateOfBirth.DayOfYear)
                 age = age - 1;
-            return age;
+            return age.ToString();
         }
         public bool GetSilvestre([Parent] Pet pet, [ScopedService] ToledoContext context)
         {
