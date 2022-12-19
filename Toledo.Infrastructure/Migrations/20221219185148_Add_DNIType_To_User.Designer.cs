@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Toledo.Infrastructure.Data;
@@ -12,9 +13,10 @@ using Toledo.Infrastructure.Data;
 namespace Toledo.Infrastructure.Migrations
 {
     [DbContext(typeof(ToledoContext))]
-    partial class ToledoContextModelSnapshot : ModelSnapshot
+    [Migration("20221219185148_Add_DNIType_To_User")]
+    partial class Add_DNIType_To_User
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

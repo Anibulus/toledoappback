@@ -7,6 +7,7 @@ namespace Toledo.Api.GraphQL.Mutation;
 
 public record CreateUserInput(
     string? DNI,
+    string? DNIType,
     string? Name,
     string? Email,
     string? Password,
@@ -63,6 +64,7 @@ public class CreateUserMutation
         var user = new User
         {
             DNI = (string)input.DNI.Trim(),
+            DNIType = input.DNIType ?? "",
             Name = input.Name ?? "",
             Email = input.Email ?? "",
             PasswordSalt = salt!,

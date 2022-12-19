@@ -6,6 +6,7 @@ namespace Toledo.Api.GraphQL.Mutation;
 
 public record UpdateUserInput(
     string? DNI,
+    string? DNIType,
     string? Name,
     string? Email,
     EnumRole? Role,
@@ -31,6 +32,9 @@ public class UpdateUserMutation
 
         if (input.DNI is not null)
             user.DNI = input.DNI;
+
+        if (input.DNIType is not null)
+            user.DNIType = input.DNIType;
 
         if (input.Name is not null)
             user.Name = input.Name;

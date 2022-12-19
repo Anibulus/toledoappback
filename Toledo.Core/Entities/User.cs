@@ -12,6 +12,7 @@ namespace Toledo.Core.Entities
         //Cc, Identification Number
         //</summary>
         public string DNI { get; set; } = "";
+        public string DNIType { get; set; } = "";
         public string Name { get; set; } = "";
         public bool Active { get; set; } = true;
         public int LoginCount { get; set; }
