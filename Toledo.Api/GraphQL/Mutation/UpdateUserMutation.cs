@@ -12,7 +12,8 @@ public record UpdateUserInput(
     EnumRole? Role,
     EnumGender? Gender,
     string? Phone,
-    string? Observation
+    string? Observation,
+    LocationInput? Location
 );
 
 [ExtendObjectType(OperationTypeNames.Mutation)]
@@ -26,7 +27,7 @@ public class UpdateUserMutation
         ToledoContext context
     )
     {
-        var user = context.Users.FirstOrDefault(x => x.Id == id);
+        var user = context.Users.Include(x=>x.Location).FirstOrDefault(x => x.Id == id);
         if (user is null)
             throw new GraphQLException(Errors.Exceptions.ID_NOT_FOUND);
 
@@ -59,6 +60,22 @@ public class UpdateUserMutation
         try
         {
             await context.SaveChangesAsync();
+
+            if (input.Location is not null && user.Location is not null)
+            {
+                UpdateLocationMutation locationMutation = new();
+                await locationMutation.UpdateLocation(user.Location.Id,
+                    new(
+                        user.Id,
+                        input.Location.Longitude,
+                        input.Location.Latitude,
+                        input.Location.Zone,
+                        input.Location.Address
+                    ),
+                    claimsPrincipal,
+                    context
+                );
+            }
         }
         catch (Exception e)
         {
