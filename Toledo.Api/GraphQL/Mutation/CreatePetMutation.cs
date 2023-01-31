@@ -20,6 +20,8 @@ public record PetInput(
     string? Color,
     string? Notes,
     string? PetType,
+    string? Vaccine,
+    string? VaccinePhoto,
     Guid? UserId,
     List<string> Images
 );
@@ -53,6 +55,8 @@ public class CreatePetMutation
             Zone = input.Zone ?? "",
             Notes = input.Notes ?? "",
             PetType = input.PetType ?? "",
+            Vaccine = input.Vaccine ?? "",
+            VaccinePhoto = input.VaccinePhoto ?? "",
             UserId = input.UserId,
             Color = input.Color ?? "",
             Images = input.Images

@@ -12,6 +12,7 @@ public record UpdateUserInput(
     EnumRole? Role,
     EnumGender? Gender,
     string? Phone,
+    string? Photo,
     string? Observation,
     LocationInput? Location
 );
@@ -52,6 +53,9 @@ public class UpdateUserMutation
         if (input.Phone is not null)
             user.Phone = input.Phone;
 
+        if (input.Photo is not null)
+            user.Photo = input.Photo;
+
         if (input.Observation is not null)
             user.Observation = input.Observation;
 
@@ -70,6 +74,7 @@ public class UpdateUserMutation
                         input.Location.Longitude,
                         input.Location.Latitude,
                         input.Location.Zone,
+                        input.Location.SubZone,
                         input.Location.Address
                     ),
                     claimsPrincipal,

@@ -10,7 +10,7 @@ namespace Toledo.Core.Entities
         public EnumPetSize Size { get; set; } = EnumPetSize.MEDIUM;
 
         [NotMapped]
-        public string Years { get; set; }
+        public string Years { get; set; } = "";
         public DateTime DateOfBirth { get; set; }
         public bool Sterilized { get; set; } = false;
         public string? LocationOfSterilization { get; set; }
@@ -22,6 +22,8 @@ namespace Toledo.Core.Entities
         public string Color { get; set; } = "";
         public string Notes { get; set; } = "";
         public string PetType { get; set; } = "";
+        public string VaccinePhoto { get; set; } = "";
+        public string Vaccine { get; set; } = "";
         public List<string>? Images { get; set; }
 
         [NotMapped]

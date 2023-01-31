@@ -28,6 +28,12 @@ public class UpdateLocationMutation
         if (input.Longitude is not null)
             location.Longitude = input.Longitude;
 
+        if (input.Zone is not null)
+            location.Zone = input.Zone;
+
+        if (input.SubZone is not null)
+            location.SubZone = input.SubZone;
+
         if (input.UserId is not null)
             location.UserId = (Guid)input.UserId;
 

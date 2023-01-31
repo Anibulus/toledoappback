@@ -9,6 +9,7 @@ public record LocationInput(
     double? Longitude,
     double? Latitude,
     string? Zone,
+    string? SubZone,
     string? Address
 );
 
@@ -35,6 +36,7 @@ public class CreateLocationMutation
             Longitude = input.Longitude,
             Latitude = input.Latitude,
             Zone = input.Zone ?? "",
+            SubZone = input.SubZone ?? "",
             Address = input.Address ?? ""
         };
 

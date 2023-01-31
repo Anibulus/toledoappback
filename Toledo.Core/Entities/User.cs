@@ -25,6 +25,7 @@ namespace Toledo.Core.Entities
         public EnumRole Role { get; set; } = EnumRole.USER;
         public EnumGender Gender { get; set; } = EnumGender.OTHER;
         public string? Phone { get; set; }
+        public string? Photo { get; set; }
         public string? Observation { get; set; }
         public virtual Location? Location { get; set; }
         public virtual ICollection<Pet> Pets { get; set; } = new List<Pet>();

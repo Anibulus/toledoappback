@@ -63,6 +63,12 @@ public class UpdatePetMutation
         if (input.PetType is not null)
             pet.PetType = input.PetType;
 
+        if (input.Vaccine is not null)
+            pet.Vaccine = input.Vaccine;
+
+        if (input.VaccinePhoto is not null)
+            pet.VaccinePhoto = input.VaccinePhoto;
+
         if (input.Images is not null)
             pet.Images = input.Images;
 

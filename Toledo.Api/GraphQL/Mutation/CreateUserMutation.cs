@@ -14,6 +14,7 @@ public record CreateUserInput(
     EnumRole? Role,
     EnumGender? Gender,
     string? Phone,
+    string? Photo,
     string? Observation,
     LocationInput? Location
 );
@@ -72,6 +73,7 @@ public class CreateUserMutation
             Role = input.Role ?? EnumRole.USER,
             Gender = input.Gender ?? EnumGender.OTHER,
             Phone = input.Phone ?? "",
+            Photo = input.Photo ?? "",
             Observation = input.Observation,
             Active = true
         };
@@ -91,6 +93,7 @@ public class CreateUserMutation
                         input.Location.Longitude,
                         input.Location.Latitude,
                         input.Location.Zone,
+                        input.Location.SubZone,
                         input.Location.Address
                     ),
                     claimsPrincipal,
